@@ -1,4 +1,4 @@
-export class CreateFormationDto {
+export interface Formation {
   id: number;
   name: string;
   createdAt: Date;

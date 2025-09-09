@@ -1,9 +1,17 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { FormationService } from './formation.service';
 import { CreateFormationDto } from './dto/create-formation.dto';
 import { UpdateFormationDto } from './dto/update-formation.dto';
 
-@Controller('formation')
+@Controller('formations')
 export class FormationController {
   constructor(private readonly formationService: FormationService) {}
 
@@ -13,7 +21,7 @@ export class FormationController {
   }
 
   @Get()
-  findAll() {
+  findAll(): any {
     return this.formationService.findAll();
   }
 
@@ -23,7 +31,10 @@ export class FormationController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateFormationDto: UpdateFormationDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateFormationDto: UpdateFormationDto,
+  ) {
     return this.formationService.update(+id, updateFormationDto);
   }
 

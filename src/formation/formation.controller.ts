@@ -33,23 +33,16 @@ export class FormationController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    // return this.formationService.findOne(+id);
-
-    //------------------------------------
-
     //Code correction du 10/09
 
     const formation = this.formationService.findOne(+id);
-    if (!formation) throw new NotFoundException('Formation not found');
-    return { data: { formation }, message: `Voici la formation ${formation}` };
+    if (!formation) throw new NotFoundException();
+    return { data: { formation }, message: formation.name };
   }
 
   @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateFormationDto: UpdateFormationDto,
-  ) {
-    return this.formationService.update(+id, updateFormationDto);
+  update(@Param('id') id: string, @Body('name') name: string) {
+    return this.formationService.update(+id, name);
   }
 
   @Delete(':id')

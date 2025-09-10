@@ -5,7 +5,7 @@ import { Formation } from './interfaces/formation.interfaces';
 
 @Injectable()
 export class FormationService {
-  private readonly formations: Formation[] = [];
+  private formations: Formation[] = [];
   private idCounter = 1;
 
   // GET /formations - Récupérer toutes les formations

@@ -7,12 +7,14 @@ import {
   Param,
   Delete,
   NotFoundException,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { FormationService } from './formation.service';
 import { CreateFormationDto } from './dto/create-formation.dto';
 import { UpdateFormationDto } from './dto/update-formation.dto';
-import type { Formation } from './interfaces/formation.interfaces';
+import type { IFormation } from './interfaces/formation.interfaces';
 import { StudentService } from 'src/student/student.service';
+import { Formation } from '@prisma/client';
 
 @Controller('formations')
 export class FormationController {
@@ -22,31 +24,32 @@ export class FormationController {
   ) {}
 
   @Post()
-  create(@Body() createFormationDto: CreateFormationDto): Formation {
+  async create(
+    @Body() createFormationDto: CreateFormationDto,
+  ): Promise<Formation> {
     return this.formationService.create(createFormationDto);
   }
 
   @Get()
-  findAll(): Formation[] {
+  async findAll(): Promise<Formation[]> {
     return this.formationService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    //Code correction du 10/09
-
-    const formation = this.formationService.findOne(+id);
-    if (!formation) throw new NotFoundException();
-    return { data: { formation }, message: formation.name };
+  async findOne(@Param('id', ParseIntPipe) id: number): Promise<Formation> {
+    return this.formationService.findOne(Number(id));
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body('name') name: string) {
-    return this.formationService.update(+id, name);
+  async update(
+    @Param('id') id: string,
+    @Body() dto: UpdateFormationDto,
+  ): Promise<Formation> {
+    return this.formationService.update(Number(id), dto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.formationService.remove(+id);
+  async remove(@Param('id') id: string): Promise<Formation> {
+    return this.formationService.remove(Number(id));
   }
 }

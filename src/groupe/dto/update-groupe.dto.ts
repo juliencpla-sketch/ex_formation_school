@@ -1,4 +1,7 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateGroupeDto } from './create-groupe.dto';
+import { IsNotEmpty, IsString } from 'class-validator';
 
-export class UpdateGroupeDto extends PartialType(CreateGroupeDto) {}
+export class UpdateGroupeDto {
+  @IsString()
+  @IsNotEmpty()
+  name: string;
+}

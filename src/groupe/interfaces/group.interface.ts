@@ -1,6 +1,8 @@
-export interface IFormation {
+export interface IGroupe {
   id: number;
   name: string;
+  formationId: number;
+
   createdAt: Date;
   updatedAt: Date;
 }

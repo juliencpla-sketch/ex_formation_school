@@ -1,9 +1,9 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { CreateFormationDto } from './create-formation.dto';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 export class UpdateFormationDto extends PartialType(CreateFormationDto) {
-  id: number;
-  name: string;
-  createdAt: Date;
-  updatedAt: Date;
+  @IsString()
+  @IsNotEmpty()
+  readonly name: string;
 }

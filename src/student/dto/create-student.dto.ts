@@ -1,4 +1,11 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { Type } from 'class-transformer';
+import {
+  IsDate,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 export class CreateStudentDto {
   @IsString()
@@ -9,5 +16,15 @@ export class CreateStudentDto {
   @IsNotEmpty()
   lastName: string;
 
+  @IsDate()
+  @IsOptional()
+  @Type(() => Date)
+  dateOfBirth: Date;
+
+  @IsString()
+  @IsOptional()
+  discordWehBook: string;
+
+  @IsNumber()
   groupeId: number;
 }

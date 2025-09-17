@@ -1,11 +1,32 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateStudentDto } from './create-student.dto';
-import { IsNotEmpty, IsString } from 'class-validator';
+import {
+  IsDate,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 export class UpdateStudentDto {
-  readonly firstName?: string;
-  readonly lastName?: string;
-  readonly dateOfBirth?: Date;
-  readonly discordWebHook?: string;
-  readonly groupeId?: number;
+  @IsString()
+  @IsNotEmpty()
+  @IsOptional()
+  firstName: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @IsOptional()
+  lastName: string;
+
+  @IsDate()
+  @IsOptional()
+  dateOfBirth: Date;
+
+  @IsString()
+  @IsNotEmpty()
+  @IsOptional()
+  discordWehBook?: string;
+
+  @IsNumber()
+  @IsOptional()
+  groupeId: number;
 }

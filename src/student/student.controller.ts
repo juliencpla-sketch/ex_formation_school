@@ -22,9 +22,14 @@ export class StudentController {
     return this.studentService.create(createFormationDto);
   }
 
-  @Get()
+  @Get('/all')
   async findAll(): Promise<Student[]> {
     return this.studentService.findAll();
+  }
+
+  @Get('/all/formation/:groupeId')
+  findAllStudentsByGroup(@Param('groupeId', ParseIntPipe) groupeId: number) {
+    return this.studentService.findAllStudentsByGroup(groupeId);
   }
 
   @Get(':id')
@@ -36,7 +41,9 @@ export class StudentController {
   async update(
     @Param('id') id: string,
     @Body() updateStudentDto: UpdateStudentDto,
-  ) {}
+  ) {
+    return this.studentService.update(Number(id), updateStudentDto);
+  }
 
   @Delete(':id')
   async remove(@Param('id') id: string): Promise<Student> {

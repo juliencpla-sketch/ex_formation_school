@@ -13,6 +13,10 @@ export class GroupeService {
     return this.prisma.groupe.findMany();
   }
 
+  findAllGroupByFormation(formationId: number) {
+    return this.prisma.groupe.findMany({ where: { formationId } });
+  }
+
   async findOne(id: number): Promise<Groupe> {
     const groupe = await this.prisma.groupe.findUnique({ where: { id } });
     if (!groupe) {
@@ -27,9 +31,9 @@ export class GroupeService {
         formationId: createGroupeDto.formationId,
         //leadId: createGroupeDto.leadId, // number | undefined → valide
       },
-      include: { formation: true, Student: true },
+      include: { formation: { select: { name: true } } },
     });
-  }
+  } //Le include permet de retourner le nom de la formation liée par l'id au groupe que l'on crée.
 
   async update(id: number, updateGroupeDto: UpdateGroupeDto) {
     try {

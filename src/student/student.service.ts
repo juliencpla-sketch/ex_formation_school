@@ -18,31 +18,42 @@ export class StudentService {
   async findOne(id: number): Promise<Student> {
     const formation = await this.prisma.student.findUnique({ where: { id } });
     if (!formation) {
-      throw new NotFoundException(`Formation avec l'id ${id} introuvable.`);
+      throw new NotFoundException(`Student with id ${id} not found.`);
     }
     return formation;
   }
 
+  findAllStudentsByGroup(groupeId: number) {
+    return this.prisma.student.findMany({ where: { groupeId } });
+  }
+
   //POST /formations - Créer une formation
-  async create(createStudentDto: CreateStudentDto): Promise<Student> {
+  async create(data: CreateStudentDto): Promise<Student> {
     return this.prisma.student.create({
-      data: {
-        firstName: createStudentDto.firstName,
-        lastName: createStudentDto.lastName,
-        groupeId: createStudentDto.groupeId,
-      },
+      data,
     });
   }
 
   //PUT /formations/:id Mettre à jour une formation existante
-  async update(id: number, updateFormationDto: UpdateFormationDto) {}
+  async update(id: number, data: UpdateStudentDto) {
+    const student = await this.prisma.student.findUnique({ where: { id } });
+    if (!student) {
+      throw new NotFoundException(
+        'No student with this ID, plz try another one.',
+      );
+    }
+    return this.prisma.student.update({
+      where: { id },
+      data,
+    });
+  }
 
   //DELETE /formations/:id Supprimer une formation
   async remove(id: number): Promise<Student> {
     try {
-      return this.prisma.student.delete({ where: { id } });
+      return await this.prisma.student.delete({ where: { id } });
     } catch {
-      throw new NotFoundException(`Formation ${id} introuvable.`);
+      throw new NotFoundException(`Student ${id} not found.`);
     }
   }
 }

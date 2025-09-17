@@ -19,7 +19,7 @@ model Formation {
   name      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  Groupe    Groupe[]
+  groupes   Groupe[]
 
   @@map("formation")
 }
@@ -31,7 +31,7 @@ model Groupe {
   formationId Int
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
-  Student     Student[]
+  students    Student[]
 
   @@map("groupe")
 }
